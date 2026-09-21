@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Debug\\Skybox.obj",
+            "outputs": [
+                "Debug\\Skybox.h.obj.dt.module.json",
+                "Debug\\Skybox.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}

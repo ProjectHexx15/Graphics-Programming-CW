@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Debug\\SDL_platform.obj",
+            "outputs": [
+                "Debug\\SDL_platform.h.obj.dt.module.json",
+                "Debug\\SDL_platform.h.obj.dt.d.json"
+            ],
+            "requires": []
+        }
+    ]
+}
