@@ -1,4 +1,13 @@
-﻿  MainGame.cpp
+﻿  Display.cpp
   main.cpp
+  MainGame.cpp
+C:\Users\AMCGRO300\Documents\GitHub\Graphics-Programming-CW\Lab1\MainGame.cpp(115,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Mesh.cpp
+  obj_loader.cpp
+C:\Users\AMCGRO300\Documents\GitHub\Graphics-Programming-CW\Lab1\obj_loader.cpp(378,16): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  Shader.cpp
+  Skybox.cpp
+  Texture.cpp
   Generating Code...
-  Lab1.vcxproj -> C:\Users\amiea\Desktop\Mimi\Projects\Uni\Y2\Graphics Programming\Lab Starter Week 1\Debug\Lab1.exe
+  stb_image.c
+  Lab1.vcxproj -> C:\Users\AMCGRO300\Documents\GitHub\Graphics-Programming-CW\Debug\Lab1.exe

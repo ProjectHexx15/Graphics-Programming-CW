@@ -27,6 +27,7 @@ private:
 	void processInput();
 	void gameLoop();
 	void drawGame();
+	void linkGeo();
 
 	Display _gameDisplay;
 	GameState _gameState;
@@ -35,6 +36,7 @@ private:
 	Camera myCamera;
 	Texture texture; 
 	Shader shader;
+	Shader geoShader;
 	Skybox skybox;
 	Shader ADS;
 	Transform transform;

@@ -53,8 +53,10 @@ void MainGame::initSystems()
 	mesh2.loadModel("..\\res\\monkey3.obj");
 	skybox.init(faces);
 	texture.init("..\\res\\bricks.jpg"); //
-	shader.init("..\\res\\shader.vert", "..\\res\\shader.frag"); //new shader
-	ADS.init("..\\res\\ADS.vert", "..\\res\\ADS.frag"); //new shader
+	//shader.init("..\\res\\shader.vert", "..\\res\\shader.frag"); //new shader
+	geoShader.initGeo();
+	linkGeo();
+	//ADS.init("..\\res\\ADS.vert", "..\\res\\ADS.frag"); //new shader
 
 	myCamera.initCamera(glm::vec3(0, 0, -30), 70.0f, (float)_gameDisplay.getWidth()/_gameDisplay.getHeight(), 0.01f, 1000.0f);
 	counter = 0.0f;
@@ -95,9 +97,9 @@ void MainGame::drawGame()
 	transform.SetRot(glm::vec3(0.0, counter * 2, 0.0));
 	transform.SetScale(glm::vec3(5.0, 5.0, 5.0));
 
-	ADS.Bind();
-	linkADS();
-	ADS.Update(transform, myCamera);
+	geoShader.Bind();
+	//linkADS();
+	geoShader.Update(transform, myCamera);
 	texture.Bind(0);
 	mesh2.draw();
 	counter = counter + 0.01f;
@@ -107,3 +109,9 @@ void MainGame::drawGame()
 
 	_gameDisplay.swapBuffer();
 } 
+
+void MainGame::linkGeo()
+{
+	geoShader.setInt("time", 1.0f);
+
+}
