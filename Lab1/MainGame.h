@@ -28,6 +28,7 @@ private:
 	void gameLoop();
 	void drawGame();
 	void linkGeo();
+	void linkeMapping();
 
 	Display _gameDisplay;
 	GameState _gameState;
@@ -37,6 +38,7 @@ private:
 	Texture texture; 
 	Shader shader;
 	Shader geoShader;
+	Shader eMappingShader;
 	Skybox skybox;
 	Shader ADS;
 	Transform transform;

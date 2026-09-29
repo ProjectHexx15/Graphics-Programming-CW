@@ -52,10 +52,11 @@ void MainGame::initSystems()
 	_gameDisplay.initDisplay(); 
 	mesh2.loadModel("..\\res\\monkey3.obj");
 	skybox.init(faces);
-	texture.init("..\\res\\bricks.jpg"); //
+	texture.init("..\\res\\bricks.jpg");
+
 	//shader.init("..\\res\\shader.vert", "..\\res\\shader.frag"); //new shader
-	geoShader.initGeo();
-	linkGeo();
+	//geoShader.initGeo();
+	eMappingShader.init("..\\res\\eMapping.frag", "..\\res\\eMapping.vert");
 	//ADS.init("..\\res\\ADS.vert", "..\\res\\ADS.frag"); //new shader
 
 	myCamera.initCamera(glm::vec3(0, 0, -30), 70.0f, (float)_gameDisplay.getWidth()/_gameDisplay.getHeight(), 0.01f, 1000.0f);
@@ -92,18 +93,25 @@ void MainGame::drawGame()
 {
 	_gameDisplay.clearDisplay(0.0f, 0.0f, 0.0f, 1.0f);
 
+	eMappingShader.Bind();
+    eMappingShader.Update(transform, myCamera);
+
+	//geoShader.Bind();
+	texture.Bind(0);
+	//linkGeo();
+
+	//geoShader.Update(transform, myCamera);
+
+	mesh2.draw();
+	skybox.draw(&myCamera);
 
 	transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
 	transform.SetRot(glm::vec3(0.0, counter * 2, 0.0));
 	transform.SetScale(glm::vec3(5.0, 5.0, 5.0));
 
-	geoShader.Bind();
-	//linkADS();
-	geoShader.Update(transform, myCamera);
-	texture.Bind(0);
-	mesh2.draw();
 	counter = counter + 0.01f;
-	skybox.draw(&myCamera);
+
+
 	glEnableClientState(GL_COLOR_ARRAY); 
 	glEnd();
 
