@@ -1,4 +1,6 @@
-﻿  MainGame.cpp
-  main.cpp
+﻿  main.cpp
+  MainGame.cpp
+C:\Users\amiea\Documents\GitHub\Graphics-Programming-CW\Lab1\MainGame.cpp(45,27): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\amiea\Documents\GitHub\Graphics-Programming-CW\Lab1\MainGame.cpp(46,28): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   Generating Code...
   Lab1.vcxproj -> C:\Users\amiea\Documents\GitHub\Graphics-Programming-CW\Debug\Lab1.exe

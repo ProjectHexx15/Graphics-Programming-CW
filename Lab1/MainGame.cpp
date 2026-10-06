@@ -42,7 +42,10 @@ void MainGame::initSystems()
 	mesh2.loadModel("..\\res\\monkey3.obj");
 	skybox.init(faces);
 	texture.init("..\\res\\bricks.jpg");
+	w = _gameDisplay.getWidth();
+	h = _gameDisplay.getHeight();
 
+	initFBO();
 	//shader.init("..\\res\\shader.vert", "..\\res\\shader.frag"); //new shader
 	geoShader.initGeo();
 	eMappingShader.init("..\\res\\eMapping.frag", "..\\res\\eMapping.vert");
@@ -82,6 +85,11 @@ void MainGame::drawGame()
 {
 	_gameDisplay.clearDisplay(0.0f, 0.0f, 0.0f, 1.0f);
 
+	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+	glEnable(GL_DEPTH_TEST);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
 	transform.SetRot(glm::vec3(0.0, counter * 2, 0.0));
 	transform.SetScale(glm::vec3(5.0, 5.0, 5.0));
@@ -104,6 +112,7 @@ void MainGame::drawGame()
 	glEnd();
 
 	_gameDisplay.swapBuffer();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 } 
 
 void MainGame::linkGeo()
@@ -125,4 +134,29 @@ void MainGame::linkEmapping()
 	eMappingShader.setMat4("view", myCamera.getView());
 	eMappingShader.setMat4("model", transform.GetModel());
 	eMappingShader.setVec3("cameraPos", myCamera.getPos());
+}
+
+void MainGame::initFBO()
+{
+	glGenFramebuffers(1, &FBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+
+	glGenTextures(1, &CBO);
+	glBindTexture(GL_TEXTURE_2D, CBO);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, CBO, 0);
+
+	glGenRenderbuffers(1, &RBO);
+	glBindRenderbuffer(GL_RENDERBUFFER, RBO);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
+		cout << "FRAMEBUFFER:: Framebuffer is complete!" << endl;
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 }

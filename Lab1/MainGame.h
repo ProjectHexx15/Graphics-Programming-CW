@@ -24,6 +24,7 @@ public:
 private:
 
 	void initSystems();
+	void initFBO();
 	void processInput();
 	void gameLoop();
 	void drawGame();
@@ -42,6 +43,13 @@ private:
 	Skybox skybox;
 	Shader ADS;
 	Transform transform;
+	GLuint FBO;
+	GLuint RBO;
+	GLuint CBO;
+	GLuint quadVAO;
+	GLuint quadVBO;
+	int w;
+	int h;
 
 	vector<std::string> faces = 
 	{
