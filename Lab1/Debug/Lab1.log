@@ -1,3 +1,4 @@
 ﻿  MainGame.cpp
-C:\Users\amcgro300\Documents\GitHub\Graphics-Programming-CW\Lab1\MainGame.cpp(123,27): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  Lab1.vcxproj -> C:\Users\amcgro300\Documents\GitHub\Graphics-Programming-CW\Debug\Lab1.exe
+  main.cpp
+  Generating Code...
+  Lab1.vcxproj -> C:\Users\amiea\Documents\GitHub\Graphics-Programming-CW\Debug\Lab1.exe

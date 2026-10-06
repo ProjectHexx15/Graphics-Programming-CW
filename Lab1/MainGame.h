@@ -28,7 +28,7 @@ private:
 	void gameLoop();
 	void drawGame();
 	void linkGeo();
-	void linkeMapping();
+	void linkEmapping();
 
 	Display _gameDisplay;
 	GameState _gameState;

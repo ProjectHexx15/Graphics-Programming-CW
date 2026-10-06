@@ -31,19 +31,8 @@ void MainGame::linkADS()
 	// Define the object color (red object in this case)
 	glm::vec3 objectColor(1.0f, 0.0f, 0.0f);
 
-	// Set the light position uniform in your shader
-	ADS.setVec3("lightPos", lightPos);
-
-	// Set the light color uniform in your shader
-	ADS.setVec3("lightColor", lightColor);
-
-	// Set the object color uniform in your shader
-	ADS.setVec3("objectColor", objectColor);
-
 	glm::mat4 modelMatrix = transform.GetModel();
 
-	// Set the model matrix uniform in your shader
-	ADS.setMat4("model", modelMatrix);
 }
 
 
@@ -55,7 +44,7 @@ void MainGame::initSystems()
 	texture.init("..\\res\\bricks.jpg");
 
 	//shader.init("..\\res\\shader.vert", "..\\res\\shader.frag"); //new shader
-	//geoShader.initGeo();
+	geoShader.initGeo();
 	eMappingShader.init("..\\res\\eMapping.frag", "..\\res\\eMapping.vert");
 	//ADS.init("..\\res\\ADS.vert", "..\\res\\ADS.frag"); //new shader
 
@@ -93,24 +82,23 @@ void MainGame::drawGame()
 {
 	_gameDisplay.clearDisplay(0.0f, 0.0f, 0.0f, 1.0f);
 
-	eMappingShader.Bind();
-    eMappingShader.Update(transform, myCamera);
-
-	//geoShader.Bind();
-	texture.Bind(0);
-	//linkGeo();
-
-	//geoShader.Update(transform, myCamera);
-
-	mesh2.draw();
-	skybox.draw(&myCamera);
-
 	transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
 	transform.SetRot(glm::vec3(0.0, counter * 2, 0.0));
 	transform.SetScale(glm::vec3(5.0, 5.0, 5.0));
 
-	counter = counter + 0.01f;
+	geoShader.Bind();
+	linkGeo();
+	geoShader.Update(transform, myCamera);
+	mesh2.draw();
 
+	eMappingShader.Bind();
+	eMappingShader.Update(transform, myCamera);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, skybox.textureID);
+
+	counter = counter + 0.02f;
+
+	skybox.draw(&myCamera);
 
 	glEnableClientState(GL_COLOR_ARRAY); 
 	glEnd();
@@ -120,6 +108,21 @@ void MainGame::drawGame()
 
 void MainGame::linkGeo()
 {
-	geoShader.setInt("time", 1.0f);
+	float randX = ((float)rand() / (RAND_MAX));
+	float randY = ((float)rand() / (RAND_MAX));
+	float randZ = ((float)rand() / (RAND_MAX));
+	// Frag: uniform float randColourX; uniform float randColourY; uniform float randColourZ;
+	geoShader.setFloat("randColourX", randX);
+	geoShader.setFloat("randColourY", randY);
+	geoShader.setFloat("randColourZ", randZ);
+	// Geom: uniform float time;
+	geoShader.setFloat("time", counter);
+}
 
+void MainGame::linkEmapping()
+{
+	eMappingShader.setMat4("projection", myCamera.getProjection());
+	eMappingShader.setMat4("view", myCamera.getView());
+	eMappingShader.setMat4("model", transform.GetModel());
+	eMappingShader.setVec3("cameraPos", myCamera.getPos());
 }
